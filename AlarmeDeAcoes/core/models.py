@@ -39,7 +39,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField('first name', max_length=30)
     last_name = models.CharField('last name', max_length=30, blank=True)
     date_joined = models.DateTimeField('date joined', auto_now_add=True)
-    is_active = models.BooleanField('active', default=False)
+    is_active = models.BooleanField('active', default=True)
     is_staff = models.BooleanField('staff', default=False)
 
     objects = UserManager()
@@ -63,3 +63,21 @@ class User(AbstractBaseUser, PermissionsMixin):
         Returns the short name for the user.
         '''
         return self.first_name
+
+
+class Code(models.Model):
+    code = models.CharField(verbose_name="Codigo", max_length=6)
+    price = models.DecimalField(verbose_name="Preço", max_digits=10, decimal_places=3)
+    open_price = models.DecimalField(verbose_name="Preço de abertura", max_digits=10, decimal_places=3)
+
+
+class WatchList(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    code = models.ForeignKey(Code, on_delete=models.CASCADE)
+    start_price = models.DecimalField(verbose_name="Preço de início", max_digits=10, decimal_places=3)
+    low_price = models.DecimalField(verbose_name="Preço mínimo", max_digits=10, decimal_places=3, null=True, blank=True)
+    high_price = models.DecimalField(verbose_name="Preço máximo", max_digits=10, decimal_places=3, null=True, blank=True)
+    negative_variation = models.DecimalField(verbose_name="Variação negativa", max_digits=10, decimal_places=3, null=True, blank=True)
+    positive_variation = models.DecimalField(verbose_name="Variação positiva", max_digits=10, decimal_places=3, null=True, blank=True)
+
+    active = models.BooleanField(verbose_name="Ativo", default=True)
