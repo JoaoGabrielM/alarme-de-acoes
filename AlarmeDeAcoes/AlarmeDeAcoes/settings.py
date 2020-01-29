@@ -46,6 +46,8 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'AlarmeDeAcoes.urls'
 
+LOGIN_REDIRECT_URL = 'home'
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
