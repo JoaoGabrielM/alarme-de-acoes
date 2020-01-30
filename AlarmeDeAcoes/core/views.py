@@ -1,5 +1,9 @@
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, logout, authenticate
 from django.shortcuts import render, redirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+
 from .forms import SignUpForm
 
 # Create your views here.
@@ -7,6 +11,29 @@ from .forms import SignUpForm
 
 def index(request):
     return render(request, 'index.html')
+
+
+def user_login(request):
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = authenticate(request, email=email, password=password)
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('home'))
+            else:
+                return HttpResponse("Your account was inactive.")
+        else:
+            return HttpResponse("Usuário ou senha inválidos")
+    else:
+        return render(request, 'login.html')
+
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index'))
 
 
 def signup(request):
