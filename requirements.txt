@@ -1,6 +1,6 @@
 asgiref==3.2.3
 Django==3.0.7
-lxml==4.3.3
+lxml==4.6.2
 pep8==1.7.1
 pycodestyle==2.5.0
 pytz==2019.3
