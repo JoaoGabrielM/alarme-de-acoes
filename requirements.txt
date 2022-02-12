@@ -1,5 +1,5 @@
 asgiref==3.2.3
-Django==3.1.13
+Django==3.1.14
 lxml==4.6.5
 pep8==1.7.1
 pycodestyle==2.5.0
